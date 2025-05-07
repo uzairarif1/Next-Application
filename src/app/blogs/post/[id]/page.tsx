@@ -1,19 +1,31 @@
-import {posts} from '@/app/lib/posts-data';
+// src/app/blogs/post/[id]/page.tsx
+
+import { posts } from '@/app/lib/posts-data';
 import Post from '@/app/ui/components/post/post';
 
-export default function Page( { params }: { params: { id: string } }) {
-    
-    const post = posts.find((post) => post.id === params.id); // Find the post by ID
+interface PageProps {
+  params: Promise<{
+    id: string;
+  }>;
+}
 
-    if (!post || !post.id || !post.title || !post.content || !post.date) {
-        return <h1>Post not found</h1>;
-    }
+export default async function Page({ params }: PageProps) {
+  const resolvedParams = await params;
+  const post = await getPostById(resolvedParams.id);
 
-    return (
-        <>
-        <h1>Post</h1>
-            <Post {...post} />
-        </>
-        )
-    
+  if (!post) {
+    return <h1>Post not found</h1>;
+  }
+
+  return (
+    <>
+      <h1>{post.title}</h1>
+      <Post {...post} />
+    </>
+  );
+}
+
+// Mock async function (replace with real DB/API call if needed)
+async function getPostById(id: string) {
+  return posts.find((post) => post.id === id) || null;
 }
