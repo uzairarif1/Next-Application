@@ -17,10 +17,10 @@ export default function Home() {
           </div>
           <div>
         <Image 
-        className="hidden md:block z-10 relative  justify-center items-center"
+        className="hidden md:block z-10 relative  justify-center items-center rounded-xl"
         src="/image-desktop.jpeg"
         width={1000}
-        height={500}
+        height={400}
         alt="Picture of the Home Page"
       />
         </div>
